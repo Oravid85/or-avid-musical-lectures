@@ -8,6 +8,7 @@ import yehonatanGeffen from "./assets/pictures/yehonatanGeffen.png";
 import zeBrara from "./assets/pictures/zeBrara.png";
 import margol from "./assets/pictures/margol.png";
 import gidiGov from "./assets/pictures/gidigov.png";
+import eurovision from "./assets/pictures/eurovision.png"
 
 export const artistsData = [
   {
@@ -179,6 +180,16 @@ onlecture: `
     credit: "איור הדיוקן מבוסס על צילום מאת מתן ארזי / לשכת העיתונות הממשלתית (GPO), ברישיון CC-BY-SA 3.0.",
   },
 
+{
+    name: "סלים, מטוסים, שירים ושערים",
+    slug: "eurovision",
+    picture: eurovision,
+    header: '"אנחנו במפה ואנחנו נשארים במפה. לא רק בספורט, בהכל!"',
+    onartist: `אם הייתם חוזרים בזמן לשנת 1967 ושואלים מה לדעתך יקרה בישראל בעשור הבא, רוב הסיכויים שהיו אומרים לכם שהמפעל ייסגר בקרוב. מי היה יכול לדמיין את השינוי הדרמטי באופיה של ישראל, במעמדה בעולם, ובחיבוק החם שקיבלנו מאירופה וארה"ב. עשור של הצלחות תרבותיות יוצאות דופן ומבצעי קומנדו מסמרי שיער, שהתחיל בהעפלה למונדיאל, והסתיים בהסכם שלום עם מצריים וזכייה כפולה באירוויזיון`,
+    onlecture: `בשעה של סיפורים, סרטונים, שירים, מוזיקה חיה ותמונות נחבר את הכל ביחד: ממבצע מוקד ונצחון מלחמת ששת הימים, דרך ההישגים בספורט הבינלאומי, וכמובן – שירים: שירי האירוויזיון המופלאים של ישראל, שהביאו אותנו לזכייה שנתיים ברציפות`,
+    bgColor: "bg-blue-50 ",
+    credit: "האיור נוצר בעזרת AI ומתייחס לאירועים מרכזיים משנות ה-1970 בישראל",
+  },
 
 
 ];
