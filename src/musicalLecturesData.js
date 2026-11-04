@@ -6,8 +6,8 @@ import or04 from "./assets/lecturesPictures/or_04.jpg";
 import or05 from "./assets/lecturesPictures/or_05.jpg";
 import or06 from "./assets/lecturesPictures/or_06.jpg";
 import or07 from "./assets/lecturesPictures/or_07.jpg";
-import or08 from "./assets/lecturesPictures/or_08.jpg";
-import or09 from "./assets/lecturesPictures/or_09.jpg";
+import or08 from "./assets/lecturesPictures/or_08.jpeg";
+import or09 from "./assets/lecturesPictures/or_09.jpeg";
 
 export const musicalLecturesInfoData = {
   header: "מה זה בעצם הרצאות מוזיקליות?",
