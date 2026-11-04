@@ -7,7 +7,7 @@ import or05 from "./assets/lecturesPictures/or_05.jpg";
 import or06 from "./assets/lecturesPictures/or_06.jpg";
 import or07 from "./assets/lecturesPictures/or_07.jpg";
 import or08 from "./assets/lecturesPictures/or_08.jpeg";
-import or09 from "./assets/lecturesPictures/or_09.jpeg";
+
 
 export const musicalLecturesInfoData = {
   header: "מה זה בעצם הרצאות מוזיקליות?",
@@ -33,7 +33,7 @@ export const musicalLecturesInfoData = {
     { src: or06, alt: "אור מרצה מול אולם מלא" },
     { src: or07, alt: "הסבר והדגמה מול הקהל" },
     {src: or08, alt: "אור מנגן על הבוזוקי בהרצאה" },
-    {src: or09, alt: "אור מנגן על הגיטרה - משה דיין ברקע" },
+    
 
   ],
 
