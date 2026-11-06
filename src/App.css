@@ -40,3 +40,34 @@
 .read-the-docs {
   color: #888;
 } */
+
+
+/* מצב נגישות / ניגודיות גבוהה */
+.accessible-mode {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+.accessible-mode * {
+  /* מבטל שקיפויות ומחזיר את כל הטקסטים לשחור כהה וקריא */
+  color-scheme: light;
+}
+
+.accessible-mode p,
+.accessible-mode span,
+.accessible-mode h1,
+.accessible-mode h2,
+.accessible-mode h3,
+.accessible-mode h4,
+.accessible-mode a,
+.accessible-mode li {
+  color: #111111 !important;
+  opacity: 1 !important;
+}
+
+.accessible-mode a,
+.accessible-mode button {
+  /* הוספת מסגרת והדגשה ברורה לכל אלמנט אינטראקטיבי */
+  outline: 2px solid #1f2937 !important;
+  outline-offset: 2px !important;
+}
