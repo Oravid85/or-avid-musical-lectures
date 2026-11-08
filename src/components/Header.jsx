@@ -101,7 +101,7 @@ export function Header({ isAccessibleMode, onToggleAccessibility }) {
             </a>
 
             <a
-              href="mailto:oravid85@gmail.com"
+              href="mailto:avidor85@gmail.com"
               className="flex items-center gap-2 text-amber-900 font-medium hover:text-blue-600 transition-colors"
             >
               <FaEnvelope className="text-blue-500 text-xl" />

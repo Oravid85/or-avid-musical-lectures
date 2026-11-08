@@ -23,7 +23,7 @@ export function Footer({ onOpenTerms }) {
           </a>
 
           <a
-            href="mailto:oravid85@gmail.com"
+            href="mailto:avidor85@gmail.com"
             className="text-base flex items-center gap-2 text-amber-900 hover:text-blue-600 transition-colors"
           >
             <FaEnvelope className="text-blue-500 text-lg" />

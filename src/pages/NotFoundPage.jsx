@@ -30,7 +30,7 @@ export default function NotFoundPage() {
         </a>
         או ב
         <a
-          href="mailto:oravid85@gmail.com"
+          href="mailto:avidor85@gmail.com"
           className="inline-flex items-center text-2xl text-amber-900 hover:text-blue-700 hover:font-bold transition-colors"
         >
           <FaEnvelope className="text-blue-500 mr-2 text-3xl" />
