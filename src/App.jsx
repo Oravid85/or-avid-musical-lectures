@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useEffect } from 'react';
+import ReactGA from "react-ga4";
 import {
   HashRouter as Router,
   Routes,
@@ -34,6 +36,12 @@ export function App() {
   const location = useLocation();
   const [isTermsOpen, setIsTermsOpen] = useState(false); 
   const [isAccessibleMode, setIsAccessibleMode] = useState(false);
+ 
+ReactGA.initialize("G-FER5E4CS2S");
+
+  useEffect(() => {
+    ReactGA.send({ hitType: "pageview", page: location.pathname + location.search });
+  }, [location]);
 
   return (
     <>
