@@ -43,9 +43,9 @@ export function MusicalLecturesInfo() {
         
         {/* קרוסלת התמונות (איך נראית הרצאה) */}
         <div className="w-full md:w-[450px] flex-shrink-0 flex flex-col items-center">
-          <H2 className="font-bold text-xl mb-3 font-noto text-amber-800 text-center">
+          <h2 className="font-bold text-xl mb-3 font-noto text-amber-800 text-center">
             איך נראית הרצאה
-          </H2>
+          </h2>
           
           <div className="relative w-full h-[320px] md:h-[360px] rounded-3xl overflow-hidden shadow-md border border-amber-200/60 bg-white group">
             <img
