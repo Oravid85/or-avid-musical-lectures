@@ -79,3 +79,75 @@ body,
 }
 
 
+/* =================ְ=========================
+   הגדרות מצבי נגישות מתקדמים (Accessibility Widget)
+=========================================== */
+
+/* 1. מצב גווני אפור */
+.grayscale-mode {
+  filter: grayscale(100%) !important;
+}
+
+/* 2. ניגודיות גבוהה */
+.high-contrast-mode {
+  background-color: #000000 !important;
+  color: #ffff00 !important;
+}
+.high-contrast-mode * {
+  background-color: inherit !important;
+  color: inherit !important;
+  border-color: #ffff00 !important;
+}
+.high-contrast-mode a, 
+.high-contrast-mode button {
+  color: #ffff00 !important;
+  text-decoration: underline !important;
+}
+
+/* 3. הדגשת קישורים */
+.highlight-links-mode a {
+  text-decoration: underline !important;
+  text-decoration-thickness: 3px !important;
+  text-underline-offset: 4px !important;
+  background-color: rgba(251, 191, 36, 0.3) !important; /* רקע ענברי עדין */
+}
+
+/* 4. עצירת אנימציות ומעברים */
+.stop-animations-mode *, 
+.stop-animations-mode *::before, 
+.stop-animations-mode *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+
+/* 5. גופן קריא וסטנדרטי */
+.readable-font-mode,
+.readable-font-mode * {
+  font-family: Arial, Tahoma, sans-serif !important;
+}
+
+/* 6. פוקוס מקלדת בולט לכל המצבים הנגישים */
+.grayscale-mode a:focus-visible,
+.grayscale-mode button:focus-visible,
+.high-contrast-mode a:focus-visible,
+.high-contrast-mode button:focus-visible,
+.highlight-links-mode a:focus-visible,
+.stop-animations-mode a:focus-visible,
+.stop-animations-mode button:focus-visible,
+.readable-font-mode a:focus-visible,
+.readable-font-mode button:focus-visible {
+  outline: 3px solid #b45309 !important;
+  outline-offset: 3px !important;
+}
+/* ==========================================
+   הגדרת גדלי טקסט יחסיים (Rem Scaling)
+=========================================== */
+
+html.font-size-level-1 {
+  font-size: 110% !important;
+}
+
+html.font-size-level-2 {
+  font-size: 125% !important;
+}
