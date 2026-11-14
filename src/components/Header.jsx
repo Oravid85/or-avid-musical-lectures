@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { FaWhatsapp, FaEnvelope, FaBars, FaChevronDown } from "react-icons/fa";
 import { artistsData } from "../artistdata";
 import { AccessibilityWidget } from "./AccessibilityWidget"; 
-import { useEscapeKey } from "../hooks/useEscapeKey"; 
+import { useEscapeKey } from "../hooks/useEscapeKey.js"; 
 
 export function Header({ accessibility }) {
   const menuRef = useRef(null);
