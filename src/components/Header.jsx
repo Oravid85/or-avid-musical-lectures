@@ -20,6 +20,7 @@ export function Header({ accessibility }) {
   const [isLecturesSubOpen, setIsLecturesSubOpen] = useState(false);
   const [isAccessibilityMenuOpen, setIsAccessibilityMenuOpen] = useState(false); 
   const accessibilityMenuRef = useRef(null);
+  const accessibilityButtonRef = useRef(null);
   const location = useLocation();
 
   // ===== גלילה למעלה בכל שינוי URL =====
@@ -27,9 +28,10 @@ export function Header({ accessibility }) {
     window.scrollTo({ top: 0, behavior: "smooth" });
     setIsMenuOpen(false);
     setIsLecturesSubOpen(false);
+    setIsAccessibilityMenuOpen(false);
   }, [location.pathname]);
 
-  // ===== סגירה של התפריט בלחיצה מחוץ =====
+  // ===== סגירה של התפריט הראשי בלחיצה מחוץ =====
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -45,8 +47,6 @@ export function Header({ accessibility }) {
 
     if (IsMenuOpen) {
       document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
     }
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -58,7 +58,9 @@ export function Header({ accessibility }) {
     const handleAccessibilityClickOutside = (event) => {
       if (
         accessibilityMenuRef.current && 
-        !accessibilityMenuRef.current.contains(event.target)
+        !accessibilityMenuRef.current.contains(event.target) &&
+        accessibilityButtonRef.current &&
+        !accessibilityButtonRef.current.contains(event.target)
       ) {
         setIsAccessibilityMenuOpen(false);
       }
@@ -76,20 +78,58 @@ export function Header({ accessibility }) {
   const handleLogoClick = () => {
     setIsMenuOpen(false);
     setIsLecturesSubOpen(false);
+    setIsAccessibilityMenuOpen(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // בדיקה האם יש לפחות מאפיין נגישות אחד פעיל (בשביל צבע בולט לכפתור)
+  // פונקציית שינוי גודל טקסט
+  const changeFontSize = (newLevel) => {
+    setFontSizeLevel(newLevel);
+    const html = document.documentElement;
+    html.classList.remove("font-size-level-1", "font-size-level-2");
+    if (newLevel === 1) html.classList.add("font-size-level-1");
+    if (newLevel === 2) html.classList.add("font-size-level-2");
+  };
+
+  // פונקציית איפוס כוללת
+  const handleResetAll = () => {
+    handleResetAccessibility();
+    const html = document.documentElement;
+    html.classList.remove("font-size-level-1", "font-size-level-2");
+    setIsAccessibilityMenuOpen(false);
+  };
+
   const isAnyAccessibilityActive = 
     fontSizeLevel > 0 || grayscale || highContrast || highlightLinks || stopAnimations || readableFont;
 
+    // ===== טיפול בסגירת מודאלים ותפריטים בלחיצה על מקש ESC =====
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        if (isAccessibilityMenuOpen) {
+          setIsAccessibilityMenuOpen(false);
+          accessibilityButtonRef.current?.focus(); // החזרת הפוקוס לכפתור הנגישות
+        }
+        if (IsMenuOpen) {
+          setIsMenuOpen(false);
+          setIsLecturesSubOpen(false);
+          buttonRef.current?.focus(); // החזרת הפוקוס לכפתור התפריט הראשי
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isAccessibilityMenuOpen, IsMenuOpen]);
+
   return (
     <>
-      {/* ה-Header מקובע לחלוטין לחלק העליון */}
-      <header className="bg-white border-b border-amber-100 fixed top-0 right-0 left-0 z-50 shadow-sm">
-        <div className="max-w-5xl mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
+      <header className="bg-white border-b border-amber-100 fixed top-0 right-0 left-0 z-50 shadow-sm">  
+        <div className="max-w-5xl mx-auto px-4 md:px-8 py-4 flex justify-between items-center relative">
           
-          {/* צד ימין: כפתור התפריט ראשון, ומיד אחריו כותרת האתר */}
+          {/* צד ימין: כפתור תפריט וכותרת */}
           <div className="flex items-center gap-3">
             <button
               ref={buttonRef}
@@ -121,47 +161,51 @@ export function Header({ accessibility }) {
             </div>
           </div>
 
-          {/* צד שמאל - דסקטופ: WhatsApp, מייל, וכפתור נגישות */}
-          <div className="hidden md:flex items-center gap-6">
-            <a
-              href="https://wa.me/+972546738697"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-amber-900 font-medium hover:text-green-600 transition-colors"
-            >
-              <FaWhatsapp className="text-green-500 text-xl" />
-              WhatsApp
-            </a>
+          {/* צד שמאל: קישורים וכפתור נגישות */}
+          <div className="flex items-center gap-6">
+            <div className="hidden md:flex items-center gap-6">
+              <a
+                href="https://wa.me/+972546738697"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-amber-900 font-medium hover:text-green-600 transition-colors"
+              >
+                <FaWhatsapp className="text-green-500 text-xl" />
+                WhatsApp
+              </a>
 
-            <a
-              href="mailto:avidor85@gmail.com"
-              className="flex items-center gap-2 text-amber-900 font-medium hover:text-blue-600 transition-colors"
-            >
-              <FaEnvelope className="text-blue-500 text-xl" />
-              דוא"ל
-            </a>
+              <a
+                href="mailto:avidor85@gmail.com"
+                className="flex items-center gap-2 text-amber-900 font-medium hover:text-blue-600 transition-colors"
+              >
+                <FaEnvelope className="text-blue-500 text-xl" />
+                דוא"ל
+              </a>
+            </div>
 
-            {/* כפתור נגישות בדסקטופ - פותח תפריט ווידג'ט מתקדם */}
-            <div className="relative" ref={accessibilityMenuRef}>
+            {/* כפתור ותפריט נגישות */}
+            <div className="relative">
               <button
+                ref={accessibilityButtonRef}
                 onClick={() => setIsAccessibilityMenuOpen((prev) => !prev)}
                 aria-expanded={isAccessibilityMenuOpen}
                 aria-label="תפריט נגישות"
-                className={`flex items-center gap-2 px-3.5 py-2 rounded-xl border text-sm font-medium transition-all shadow-sm cursor-pointer ${
+                className={`flex items-center justify-center gap-2 p-2.5 md:px-3.5 md:py-2 rounded-full md:rounded-xl border text-sm font-medium transition-all shadow-sm cursor-pointer ${
                   isAnyAccessibilityActive
                     ? "bg-amber-900 text-white border-amber-900 ring-2 ring-amber-400"
                     : "bg-amber-50 text-amber-900 border-amber-200 hover:bg-amber-100"
                 }`}
               >
-                <FaUniversalAccess className="text-lg" />
-                <span>נגישות</span>
+                <FaUniversalAccess className="text-xl md:text-lg" />
+                <span className="hidden md:inline">נגישות</span>
               </button>
 
-              {/* חלונית ווידג'ט הנגישות המתקדם */}
+              {/* חלונית נגישות מעוגנת לפי הצד השמאלי החיצוני ונפתחת פנימה ימינה */}
               {isAccessibilityMenuOpen && (
-                <div className="absolute left-0 mt-3 w-80 bg-white border border-amber-100 shadow-2xl rounded-3xl p-5 font-heebo text-amber-900 z-50 text-right animate-fade-in">
-                  
-                  {/* כותרת וכפתור סגירה */}
+                <div 
+                  ref={accessibilityMenuRef}
+                  className="absolute left-0 mt-2 w-72 max-w-[calc(100vw-2rem)] bg-white border border-amber-100 shadow-2xl rounded-3xl p-5 font-heebo text-amber-900 z-50 text-right animate-fade-in max-h-[80vh] overflow-y-auto"
+                >
                   <div className="flex items-center justify-between pb-3 mb-4 border-b border-amber-100">
                     <button
                       onClick={() => setIsAccessibilityMenuOpen(false)}
@@ -175,27 +219,26 @@ export function Header({ accessibility }) {
                   
                   {/* גריד כפתורי הפונקציות */}
                   <div className="grid grid-cols-2 gap-2.5 mb-4">
-                    {/* הגדל טקסט */}
                     <button
-                      onClick={() => setFontSizeLevel((prev) => (prev < 2 ? prev + 1 : 2))}
-                      className={`p-2.5 border rounded-2xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1 ${
-                        fontSizeLevel > 0 
-                          ? "bg-amber-900 text-white border-amber-900" 
-                          : "bg-white text-amber-950 border-amber-200 hover:bg-amber-50"
-                      }`}
+                      onClick={() => {
+                        const next = fontSizeLevel < 2 ? fontSizeLevel + 1 : 2;
+                        changeFontSize(next);
+                      }}
+                      className="p-2.5 border border-amber-200 rounded-2xl text-xs font-bold bg-white text-amber-950 hover:bg-amber-50 transition-all cursor-pointer flex items-center justify-center gap-1"
                     >
                       הגדל טקסט A+
                     </button>
 
-                    {/* הקטן טקסט */}
                     <button
-                      onClick={() => setFontSizeLevel((prev) => (prev > 0 ? prev - 1 : 0))}
+                      onClick={() => {
+                        const prev = fontSizeLevel > 0 ? fontSizeLevel - 1 : 0;
+                        changeFontSize(prev);
+                      }}
                       className="p-2.5 border border-amber-200 rounded-2xl text-xs font-bold bg-white text-amber-950 hover:bg-amber-50 transition-all cursor-pointer flex items-center justify-center gap-1"
                     >
                       הקטן טקסט A-
                     </button>
 
-                    {/* ניגודיות גבוהה */}
                     <button
                       onClick={() => setHighContrast((prev) => !prev)}
                       className={`p-2.5 border rounded-2xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center ${
@@ -207,7 +250,6 @@ export function Header({ accessibility }) {
                       ניגודיות גבוהה
                     </button>
 
-                    {/* גווני אפור */}
                     <button
                       onClick={() => setGrayscale((prev) => !prev)}
                       className={`p-2.5 border rounded-2xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center ${
@@ -219,7 +261,6 @@ export function Header({ accessibility }) {
                       גווני אפור
                     </button>
 
-                    {/* הדגש קישורים */}
                     <button
                       onClick={() => setHighlightLinks((prev) => !prev)}
                       className={`p-2.5 border rounded-2xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center ${
@@ -231,7 +272,6 @@ export function Header({ accessibility }) {
                       הדגש קישורים
                     </button>
 
-                    {/* גופן קריא */}
                     <button
                       onClick={() => setReadableFont((prev) => !prev)}
                       className={`p-2.5 border rounded-2xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center ${
@@ -243,7 +283,6 @@ export function Header({ accessibility }) {
                       גופן קריא
                     </button>
 
-                    {/* עצירת אנימציות (תופס שורה מלאה) */}
                     <button
                       onClick={() => setStopAnimations((prev) => !prev)}
                       className={`col-span-2 p-2.5 border rounded-2xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center ${
@@ -256,10 +295,10 @@ export function Header({ accessibility }) {
                     </button>
                   </div>
 
-                  {/* כפתורי תחתית: איפוס */}
+                  {/* כפתור איפוס */}
                   <div className="pt-3 border-t border-amber-100 flex flex-col gap-2">
                     <button
-                      onClick={handleResetAccessibility}
+                      onClick={handleResetAll}
                       className="w-full py-2.5 px-4 border border-amber-200 rounded-2xl text-xs font-bold text-amber-950 bg-amber-50 hover:bg-amber-100 transition-colors cursor-pointer text-center"
                     >
                       איפוס הגדרות נגישות
@@ -271,105 +310,9 @@ export function Header({ accessibility }) {
             </div>
           </div>
 
-          {/* צד שמאל - מובייל: כפתור נגישות עגול */}
-          <div className="flex md:hidden items-center">
-            <button
-              onClick={() => setIsAccessibilityMenuOpen((prev) => !prev)}
-              aria-label="תפריט נגישות"
-              className={`p-2.5 rounded-full border transition-all shadow-sm flex items-center justify-center cursor-pointer ${
-                isAnyAccessibilityActive
-                  ? "bg-amber-900 text-white border-amber-900 ring-2 ring-amber-400"
-                  : "bg-amber-50 text-amber-900 border-amber-200 hover:bg-amber-100"
-              }`}
-            >
-              <FaUniversalAccess size={22} />
-            </button>
-          </div>
-
         </div>
 
-        {/* חלונית נגישות למובייל */}
-        {isAccessibilityMenuOpen && (
-          <div className="md:hidden absolute top-full right-4 left-4 mt-2 bg-white border border-amber-100 shadow-2xl rounded-3xl p-5 font-heebo text-amber-900 z-50 text-right animate-fade-in">
-            <div className="flex items-center justify-between pb-3 mb-4 border-b border-amber-100">
-              <button
-                onClick={() => setIsAccessibilityMenuOpen(false)}
-                className="p-1.5 rounded-full bg-amber-50 text-amber-900 hover:bg-amber-100 transition-colors cursor-pointer"
-              >
-                <FaTimes size={14} />
-              </button>
-              <h3 className="font-bold text-amber-950 text-base">נגישות</h3>
-            </div>
-            
-            <div className="grid grid-cols-2 gap-2.5 mb-4">
-              <button
-                onClick={() => setFontSizeLevel((prev) => (prev < 2 ? prev + 1 : 2))}
-                className={`p-2.5 border rounded-2xl text-xs font-bold transition-all cursor-pointer ${
-                  fontSizeLevel > 0 ? "bg-amber-900 text-white border-amber-900" : "bg-white text-amber-950 border-amber-200"
-                }`}
-              >
-                הגדל טקסט A+
-              </button>
-              <button
-                onClick={() => setFontSizeLevel((prev) => (prev > 0 ? prev - 1 : 0))}
-                className="p-2.5 border border-amber-200 rounded-2xl text-xs font-bold bg-white text-amber-950"
-              >
-                הקטן טקסט A-
-              </button>
-              <button
-                onClick={() => setHighContrast((prev) => !prev)}
-                className={`p-2.5 border rounded-2xl text-xs font-bold transition-all cursor-pointer ${
-                  highContrast ? "bg-amber-900 text-white border-amber-900" : "bg-white text-amber-950 border-amber-200"
-                }`}
-              >
-                ניגודיות גבוהה
-              </button>
-              <button
-                onClick={() => setGrayscale((prev) => !prev)}
-                className={`p-2.5 border rounded-2xl text-xs font-bold transition-all cursor-pointer ${
-                  grayscale ? "bg-amber-900 text-white border-amber-900" : "bg-white text-amber-950 border-amber-200"
-                }`}
-              >
-                גווני אפור
-              </button>
-              <button
-                onClick={() => setHighlightLinks((prev) => !prev)}
-                className={`p-2.5 border rounded-2xl text-xs font-bold transition-all cursor-pointer ${
-                  highlightLinks ? "bg-amber-900 text-white border-amber-900" : "bg-white text-amber-950 border-amber-200"
-                }`}
-              >
-                הדגש קישורים
-              </button>
-              <button
-                onClick={() => setReadableFont((prev) => !prev)}
-                className={`p-2.5 border rounded-2xl text-xs font-bold transition-all cursor-pointer ${
-                  readableFont ? "bg-amber-900 text-white border-amber-900" : "bg-white text-amber-950 border-amber-200"
-                }`}
-              >
-                גופן קריא
-              </button>
-              <button
-                onClick={() => setStopAnimations((prev) => !prev)}
-                className={`col-span-2 p-2.5 border rounded-2xl text-xs font-bold transition-all cursor-pointer ${
-                  stopAnimations ? "bg-amber-900 text-white border-amber-900" : "bg-white text-amber-950 border-amber-200"
-                }`}
-              >
-                עצירת אנימציות
-              </button>
-            </div>
-
-            <div className="pt-3 border-t border-amber-100">
-              <button
-                onClick={handleResetAccessibility}
-                className="w-full py-2.5 px-4 border border-amber-200 rounded-2xl text-xs font-bold text-amber-950 bg-amber-50 hover:bg-amber-100 transition-colors cursor-pointer text-center"
-              >
-                איפוס הגדרות נגישות
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* ===== תפריט הניווט הראשי הנפתח (ההיררכי) ===== */}
+        {/* ===== תפריט הניווט הראשי הנפתח ===== */}
         <div className="max-w-5xl mx-auto px-4 relative">
           <div
             ref={menuRef}
@@ -379,7 +322,6 @@ export function Header({ accessibility }) {
                 : "scale-y-0 opacity-0 pointer-events-none"
             }`}
           >
-            {/* דף הבית */}
             <Link
               to="/"
               onClick={() => setIsMenuOpen(false)}
@@ -390,7 +332,6 @@ export function Header({ accessibility }) {
 
             <div className="border-t border-amber-100 my-1"></div>
 
-            {/* רמה ראשונה: על ההרצאות */}
             <Link
               to="/about-lectures"
               onClick={() => setIsMenuOpen(false)}
@@ -401,7 +342,6 @@ export function Header({ accessibility }) {
 
             <div className="border-t border-amber-100 my-1"></div>
 
-            {/* רמה ראשונה: הרצאות */}
             <div>
               <button
                 onClick={() => setIsLecturesSubOpen((prev) => !prev)}
@@ -416,7 +356,6 @@ export function Header({ accessibility }) {
                 />
               </button>
 
-              {/* רמה שניה: פירוט ההרצאות */}
               {isLecturesSubOpen && (
                 <div className="pr-4 mt-1 space-y-1 border-r-2 border-amber-200 mr-2">
                   {artistsData.map((artist) => (
@@ -438,7 +377,6 @@ export function Header({ accessibility }) {
 
             <div className="border-t border-amber-100 my-1"></div>
 
-            {/* רמה ראשונה: עלי */}
             <Link
               to="/about"
               onClick={() => setIsMenuOpen(false)}
@@ -450,7 +388,6 @@ export function Header({ accessibility }) {
         </div>
       </header>
 
-      {/* אלמנט ריווח (Spacer) */}
       <div className="pt-20"></div>
     </>
   );

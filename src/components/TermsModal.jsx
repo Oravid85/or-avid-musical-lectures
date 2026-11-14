@@ -1,6 +1,23 @@
+import { useEffect } from "react";
 import { legalData } from "../legalData.js";
 
 export function TermsModal({ isOpen, onClose }) {
+  // ===== טיפול בסגירת המודאל בלחיצה על מקש ESC =====
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape" && isOpen) {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("keydown", handleKeyDown);
+    }
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   return (
