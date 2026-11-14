@@ -65,6 +65,9 @@ export function App() {
     fontSizeLevel === 2 ? "text-xl" : "",
   ].filter(Boolean).join(" ");
  
+//  בדיקה האם יש לפחות סממן נגישות פעיל אחד
+const isAnyAccessibilityActive = grayscale || highContrast || highlightLinks || stopAnimations || readableFont || fontSizeLevel > 0;
+  
   ReactGA.initialize("G-FER5E4CS2S");
 
   useEffect(() => {
@@ -81,7 +84,7 @@ useEffect(() => {
   return (
     <>
       <div className={`min-h-screen flex flex-col ${accessibilityClasses}`}>
-        <FocusManager />
+        <FocusManager accessibilityActive={isAnyAccessibilityActive} />
         <ScrollToTop />
         <Header 
           artistsData={artistsData} 

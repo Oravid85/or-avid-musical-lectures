@@ -1,17 +1,19 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-export function FocusManager() {
+export function FocusManager({ accessibilityActive }) {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    // מחפש את הכותרת הראשית ומעביר אליו פוקוס במעבר עמוד
+    // מעביר פוקוס לכותרת הראשית רק אם מצב נגישות מופעל
+    if (!accessibilityActive) return;
+
     const mainHeading = document.querySelector("h1");
     if (mainHeading) {
       mainHeading.setAttribute("tabIndex", "-1");
       mainHeading.focus();
     }
-  }, [pathname]);
+  }, [pathname, accessibilityActive]);
 
   return null;
 }
