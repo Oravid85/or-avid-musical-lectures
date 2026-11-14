@@ -1,4 +1,4 @@
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { artistsData } from "../artistdata";
 
@@ -7,8 +7,7 @@ import or_06 from "../assets/lecturesPictures/or_06.jpg"; // לדסקטופ
 import or_04 from "../assets/lecturesPictures/or_04.jpg"; // למובייל
 
 export function Greeting() {
-  const navigate = useNavigate();
-
+  
   return (
     /* במובייל: px-2 למקסימום רוחב | במחשב (md): px-12 המקורי */
     <div className="bg-amber-50/50 min-h-screen px-2 md:px-12 py-8 max-w-6xl mx-auto">
@@ -56,7 +55,7 @@ export function Greeting() {
         {/* במובייל: gap-5 ללא שוליים חיצוניים | במחשב (md): gap-8 m-4 המקורי */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8 mx-0 md:m-4">
           {artistsData.map((lecture) => (
-            <div
+            <Link
               key={lecture.name}
               /* במובייל: p-4 לניצול מקום | במחשב (md): p-6 המקורי */
               className="group bg-white border-2 border-amber-200 rounded-2xl shadow-sm hover:shadow-xl p-4 md:p-6 cursor-pointer transition-all duration-300 flex flex-col justify-between"
@@ -98,7 +97,7 @@ export function Greeting() {
                   לפרטים נוספים ←
                 </span>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
