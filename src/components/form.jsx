@@ -90,6 +90,7 @@ export default function ContactForm({ lectureData, aboutMe, mainview }) {
         <input
           type="text"
           placeholder="שם מלא"
+          aria-label="שם מלא"
           value={name}
           onChange={(ev) => setName(ev.target.value)}
           className="w-full bg-white border border-amber-200/80 focus:border-amber-600 focus:outline-none p-3 rounded-2xl text-center shadow-xs text-gray-800 placeholder-gray-400 transition-all"
@@ -99,6 +100,7 @@ export default function ContactForm({ lectureData, aboutMe, mainview }) {
         <input
           type="email"
           placeholder='דוא"ל'
+          aria-label="כתובת דואר אלקטרוני"
           value={email}
           onChange={(ev) => setEmail(ev.target.value)}
           className="w-full bg-white border border-amber-200/80 focus:border-amber-600 focus:outline-none p-3 rounded-2xl text-center shadow-xs text-gray-800 placeholder-gray-400 transition-all"
@@ -108,6 +110,7 @@ export default function ContactForm({ lectureData, aboutMe, mainview }) {
         <input
           type="tel"
           placeholder="מספר טלפון"
+          aria-label="מספר טלפון"
           value={telNum}
           onChange={(ev) => setTelNum(ev.target.value)}
           className="w-full bg-white border border-amber-200/80 focus:border-amber-600 focus:outline-none p-3 rounded-2xl text-center shadow-xs text-gray-800 placeholder-gray-400 transition-all"
