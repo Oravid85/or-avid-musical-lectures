@@ -1,22 +1,9 @@
-import { useEffect } from "react";
 import { legalData } from "../legalData.js";
+import { useEscapeKey } from "../hooks/useEscapeKey"; // ייבוא ה-Hook הגלובלי
 
-export function TermsModal({ isOpen, onClose }) {
-  // ===== טיפול בסגירת המודאל בלחיצה על מקש ESC =====
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.key === "Escape" && isOpen) {
-        onClose();
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener("keydown", handleKeyDown);
-    }
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [isOpen, onClose]);
+export function TermsModal({ isOpen, onClose, triggerRef }) {
+  // שימוש ב-Hook הגלובלי לטיפול ב-Esc והחזרת פוקוס אוטומטית
+  useEscapeKey(isOpen, onClose, triggerRef);
 
   if (!isOpen) return null;
 
