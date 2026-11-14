@@ -1,5 +1,5 @@
 import { legalData } from "../legalData.js";
-import { useEscapeKey } from "../hooks/useEscapeKey"; // ייבוא ה-Hook הגלובלי
+import { useEscapeKey } from "../hooks/useEscapeKey.js"; 
 
 export function TermsModal({ isOpen, onClose, triggerRef }) {
   // שימוש ב-Hook הגלובלי לטיפול ב-Esc והחזרת פוקוס אוטומטית
