@@ -51,7 +51,7 @@ ReactGA.initialize("G-FER5E4CS2S");
       isAccessibleMode={isAccessibleMode}
   onToggleAccessibility={() => setIsAccessibleMode(!isAccessibleMode)} />
       
-      <div key={location.pathname} className="animate-fade-in">
+      <main id="main-content" key={location.pathname} className="animate-fade-in">
         <Routes>
           {/* דף הבית */}
           <Route path="/" element={<Greeting />} />
@@ -74,7 +74,7 @@ ReactGA.initialize("G-FER5E4CS2S");
           {/* כל כתובת אחרת מפנה ל-404 */}
           <Route path="*" element={<Navigate to="/404" replace />} />
         </Routes>
-      </div>
+      </main>
 
       <BuisnessSection
         artistsData={artistsData}
