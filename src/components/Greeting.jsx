@@ -57,10 +57,11 @@ export function Greeting() {
           {artistsData.map((lecture) => (
             <Link
               key={lecture.name}
+              to={`/lectures/${lecture.slug}`}
               /* במובייל: p-4 לניצול מקום | במחשב (md): p-6 המקורי */
               className="group bg-white border-2 border-amber-200 rounded-2xl shadow-sm hover:shadow-xl p-4 md:p-6 cursor-pointer transition-all duration-300 flex flex-col justify-between"
               onClick={() => {
-                navigate(`/lectures/${lecture.slug}`);
+                
                 window.scrollTo({
                   top: 0,
                   behavior: "smooth",
