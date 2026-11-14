@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { FaUniversalAccess, FaTimes } from 'react-icons/fa';
-import { useEscapeKey } from '../hooks/useEscapeKey'; // ה-Hook שיצרנו
+import { useEscapeKey } from '../hooks/useEscapeKey';
 
 export function AccessibilityWidget({ accessibility }) {
   const {
